@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>DR. BICI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --verde: #13A10E;
+  --amarillo: #F2D024;
+  --rojo: #D7263D;
+  --fondo: #121212;
+  --texto: #ffffff;
+  --sombra: 5px 5px 15px rgba(0,0,0,0.6);
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--fondo);
+  color: var(--texto);
+}
+
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #000;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--sombra);
+  z-index: 999;
+}
+header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--amarillo);
+}
+header nav a {
+  color: var(--texto);
+  margin-left: 20px;
+  text-decoration: none;
+  font-weight: 600;
+}
+header .cta {
+  background: var(--verde);
+  color: #000;
+  padding: 10px 15px;
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+/* HERO */
+.hero {
+  margin-top: 90px;
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #1a1a1a, #000);
+}
+.hero h2 {
+  font-size: 50px;
+  margin: 0;
+}
+.hero p {
+  font-size: 20px;
+}
+.hero .btn {
+  background: var(--rojo);
+  padding: 12px 25px;
+  display: inline-block;
+  margin-top: 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* SERVICIOS */
+.servicios {
+  padding: 60px 20px;
+}
+.servicios h2 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 20px;
+}
+.servicio-card {
+  background: #1b1b1b;
+  border-left: 8px solid var(--rojo);
+  padding: 20px;
+  box-shadow: var(--sombra);
+  border-radius: 10px;
+}
+
+/* GALERÍA */
+.galeria {
+  padding: 60px 20px;
+}
+.foto {
+  background: #333;
+  height: 180px;
+  border: 2px dashed var(--amarillo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--amarillo);
+  font-weight: bold;
+}
+
+/* FOOTER */
+footer {
+  background: #000;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  color: var(--amarillo);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>DR. BICI</h1>
+  <nav>
+    <a href="#servicios">Servicios</a>
+    <a href="#galeria">Galería</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <a class="cta" href="https://wa.me/5491155058963">WhatsApp</a>
+</header>
+
+<section class="hero">
+  <h2>Servicio profesional para tu bici</h2>
+  <p>Rápido, confiable y con onda de taller callejero.</p>
+
+</section>
+
+<section id="servicios" class="servicios">
+  <h2>Servicios</h2>
+  <div class="grid">
+    <div class="servicio-card">Afinación completa</div>
+    <div class="servicio-card">Servicio de frenos</div>
+    <div class="servicio-card">Transmisión</div>
+    <div class="servicio-card">Armado</div>
+    <div class="servicio-card">Lavado técnico</div>
+    <div class="servicio-card">Service general</div>
+  </div>
+</section>
+
+<section id="galeria" class="galeria">
+  <h2>Galería</h2>
+  <div class="grid">
+    <div class="foto">FOTO</div>
+    <div class="foto">FOTO</div>
+    <div class="foto">FOTO</div>
+    <div class="foto">FOTO</div>
+    <div class="foto">FOTO</div>
+    <div class="foto">FOTO</div>
+  </div>
+</section>
+<!-- ...existing code... -->
+
+<section id="contacto" style="padding:60px 20px;">
+  <h2 style="text-align:center; font-size:32px; margin-bottom:30px;">Contacto</h2>
+  <form action="https://formspree.io/f/xqajyndz" method="POST" style="max-width:400px; margin:0 auto; display:flex; flex-direction:column; gap:15px;">
+    <input type="text" name="nombre" placeholder="Tu nombre" required style="padding:10px; border-radius:6px; border:none;">
+    <input type="email" name="email" placeholder="Tu email" required style="padding:10px; border-radius:6px; border:none;">
+    <textarea name="mensaje" placeholder="Tu mensaje" required style="padding:10px; border-radius:6px; border:none; min-height:80px;"></textarea>
+    <button type="submit" style="background:var(--rojo); color:#fff; font-weight:bold; padding:12px; border-radius:8px; border:none;">Enviar</button>
+  </form>
+</section>
+
+<!-- ...existing code... -->
+<!-- ...existing code... -->
+
+<section id="ubicacion" style="padding:60px 20px;">
+  <h2 style="text-align:center; font-size:32px; margin-bottom:30px;">¿Dónde estamos?</h2>
+  <div style="max-width:600px; margin:0 auto;">
+    <iframe
+      src="https://www.google.com/maps?q=Núñez+3693,+Saavedra,+Buenos+Aires,+Argentina&output=embed"
+      width="100%"
+      height="350"
+      style="border:0; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.3);"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
+<!-- ...existing code... -->
+<footer>
+  DR. BICI – Núñez 3693 (Saavedra) – Mar–Vie 13 a 19 / Sáb 11 a 17
+</footer>
+<!-- ...existing code... -->
+</body>
+</html>
