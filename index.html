@@ -1,206 +1,273 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>DR. BICI</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>DR. BICI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root {
-  --verde: #13A10E;
-  --amarillo: #F2D024;
-  --rojo: #D7263D;
-  --fondo: #121212;
-  --texto: #ffffff;
-  --sombra: 5px 5px 15px rgba(0,0,0,0.6);
-}
+  <style>
+    :root {
+      --verde: #13A10E;
+      --amarillo: #F2D024;
+      --rojo: #D7263D;
+      --fondo: #121212;
+      --texto: #ffffff;
+      --sombra: 5px 5px 15px rgba(0,0,0,0.6);
+    }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: var(--fondo);
-  color: var(--texto);
-}
+    * { box-sizing: border-box; }
+    html, body { width: 100%; overflow-x: hidden; margin: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--fondo);
+      color: var(--texto);
+    }
 
-/* HEADER */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: #000;
-  padding: 15px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: var(--sombra);
-  z-index: 999;
-}
-header h1 {
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--amarillo);
-}
-header nav a {
-  color: var(--texto);
-  margin-left: 20px;
-  text-decoration: none;
-  font-weight: 600;
-}
-header .cta {
-  background: var(--verde);
-  color: #000;
-  padding: 10px 15px;
-  font-weight: 700;
-  border-radius: 8px;
-}
+    /* Contenedor */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-/* HERO */
-.hero {
-  margin-top: 90px;
-  padding: 80px 20px;
-  text-align: center;
-  background: linear-gradient(135deg, #1a1a1a, #000);
-}
-.hero h2 {
-  font-size: 50px;
-  margin: 0;
-}
-.hero p {
-  font-size: 20px;
-}
-.hero .btn {
-  background: var(--rojo);
-  padding: 12px 25px;
-  display: inline-block;
-  margin-top: 20px;
-  border-radius: 8px;
-  color: #fff;
-  font-weight: bold;
-}
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: #000;
+      box-shadow: var(--sombra);
+      z-index: 999;
+    }
+    header .container {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+        padding: 0 20px;
+      gap: 12px;
+    }
+    header h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--amarillo);
+      margin: 0;
+    }
+    header nav.main-nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    header nav.main-nav a {
+      color: var(--texto);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 6px 8px;
+    }
+    header .cta {
+      background: var(--verde);
+      color: #000;
+      padding: 8px 12px;
+      font-weight: 700;
+      border-radius: 8px;
+      white-space: nowrap;
+       margin-left: 12px;
+    }
 
-/* SERVICIOS */
-.servicios {
-  padding: 60px 20px;
-}
-.servicios h2 {
-  text-align: center;
-  font-size: 32px;
-  margin-bottom: 30px;
-}
-.grid {
+    /* botón hamburger */
+    .menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      color: var(--texto);
+      cursor: pointer;
+    }
+
+    /* HERO */
+    main { padding-top: 84px; } /* espacio para header fijo */
+    .hero {
+      padding: 80px 0;
+      text-align: center;
+      background: linear-gradient(135deg, #1a1a1a, #000);
+    }
+    .hero h2 {
+      font-size: clamp(28px, 5vw, 50px);
+      margin: 0 0 12px;
+    }
+    .hero p { font-size: clamp(14px, 2.5vw, 20px); margin: 0; }
+
+    /* GRID / SERVICIOS */
+    .servicios { padding: 60px 0; }
+    .servicios h2 { text-align: center; font-size: 32px; margin-bottom: 24px; }
+    .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns: repeat(3, 1fr); /* mostrar 3 columnas en desktop */
   gap: 20px;
+  align-items: start;
+  padding: 10px 0;
+  /* Quitar overflow-x para eliminar la barra */
+  overflow-x: visible;
 }
-.servicio-card {
-  background: #1b1b1b;
-  border-left: 8px solid var(--rojo);
-  padding: 20px;
-  box-shadow: var(--sombra);
-  border-radius: 10px;
-}
+    .servicio-card {
+      background: #1b1b1b;
+      border-left: 8px solid var(--rojo);
+      padding: 18px;
+      box-shadow: var(--sombra);
+      border-radius: 10px;
+      min-height: 80px;
+  /* eliminar min-width y flex para que se adapten a la grilla */
+  display: flex;
+  align-items: center;
+    }
 
-/* GALERÍA */
-.galeria {
-  padding: 60px 20px;
-}
-.foto {
+    /* GALERÍA */
+    .galeria { padding: 60px 0; }
+    .foto {
   background: #333;
-  height: 180px;
+  height: 160px;
   border: 2px dashed var(--amarillo);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--amarillo);
   font-weight: bold;
+  border-radius: 6px;
+  /* quitar min-width/flex para que dependa del grid */
 }
+    /* CONTACTO */
+    #contacto { padding: 60px 0; }
+    form { max-width: 480px; margin: 0 auto; display:flex; flex-direction:column; gap:12px; }
+    input, textarea {
+      padding:10px; border-radius:6px; border: 0; outline: none; background: #161616; color:var(--texto);
+    }
+    button[type="submit"] { background:var(--rojo); padding: 12px; border-radius:8px; color:#fff; border:0; cursor:pointer; }
 
-/* FOOTER */
-footer {
-  background: #000;
-  text-align: center;
-  padding: 20px;
-  margin-top: 40px;
-  color: var(--amarillo);
+    /* MAPA */
+    #ubicacion { padding: 60px 0; }
+
+    /* FOOTER */
+    footer { background:#000; color:var(--amarillo); text-align:center; padding:18px 0; }
+
+    /* Anchors no queden tapados por header */
+    section { scroll-margin-top: 90px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      header .container { padding: 0 12px; }
+      .menu-btn { display: block; }
+      header nav.main-nav {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background: #000;
+        gap: 0;
+        padding: 8px 12px;
+        border-top: 1px solid rgba(255,255,255,0.04);
+      }
+      @media (min-width: 1200px) {
+  .servicio-card { min-width: 260px; flex: 0 0 260px; }
+  .galeria .foto { min-width: 240px; flex: 0 0 240px; }
 }
-</style>
+      header nav.main-nav.open { display: flex; }
+      header nav.main-nav a { padding: 12px 8px; }
+      header .cta { width: 120px; text-align:center; }
+      .hero { padding: 50px 0; }
+      .foto { height: 140px; }
+    }
+    
+
+  </style>
 </head>
-
 <body>
+  <header>
+    <div class="container">
+      <h1>DR. BICI</h1>
+      <button class="menu-btn" aria-label="Abrir menú">☰</button>
 
-<header>
-  <h1>DR. BICI</h1>
-  <nav>
-    <a href="#servicios">Servicios</a>
-    <a href="#galeria">Galería</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
-  <a class="cta" href="https://wa.me/5491155058963">WhatsApp</a>
-</header>
+      <nav class="main-nav">
+        <a href="#servicios">Servicios</a>
+        <a href="#galeria">Galería</a>
+        <a href="#contacto">Contacto</a>
+        <a class="cta" href="https://wa.me/5491155058963" target="_blank" rel="noreferrer">WhatsApp</a>
+      </nav>
+    </div>
+  </header>
 
-<section class="hero">
-  <h2>Servicio profesional para tu bici</h2>
-  <p>Rápido, confiable y con onda de taller callejero.</p>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h2>Servicio profesional para tu bici</h2>
+        <p>Rápido, confiable y con onda de taller callejero.</p>
+      </div>
+    </section>
 
-</section>
+    <section id="servicios" class="servicios">
+      <div class="container">
+        <h2>Servicios</h2>
+        <div class="grid">
+          <div class="servicio-card">Afinación completa</div>
+          <div class="servicio-card">Servicio de frenos</div>
+          <div class="servicio-card">Transmisión</div>
+          <div class="servicio-card">Armado</div>
+          <div class="servicio-card">Lavado técnico</div>
+          <div class="servicio-card">Service general</div>
+        </div>
+      </div>
+    </section>
 
-<section id="servicios" class="servicios">
-  <h2>Servicios</h2>
-  <div class="grid">
-    <div class="servicio-card">Afinación completa</div>
-    <div class="servicio-card">Servicio de frenos</div>
-    <div class="servicio-card">Transmisión</div>
-    <div class="servicio-card">Armado</div>
-    <div class="servicio-card">Lavado técnico</div>
-    <div class="servicio-card">Service general</div>
-  </div>
-</section>
+    <section id="galeria" class="galeria">
+      <div class="container">
+        <h2>Galería</h2>
+        <div class="grid">
+          <div class="foto">FOTO</div>
+          <div class="foto">FOTO</div>
+          <div class="foto">FOTO</div>
+          <div class="foto">FOTO</div>
+          <div class="foto">FOTO</div>
+          <div class="foto">FOTO</div>
+        </div>
+      </div>
+    </section>
 
-<section id="galeria" class="galeria">
-  <h2>Galería</h2>
-  <div class="grid">
-    <div class="foto">FOTO</div>
-    <div class="foto">FOTO</div>
-    <div class="foto">FOTO</div>
-    <div class="foto">FOTO</div>
-    <div class="foto">FOTO</div>
-    <div class="foto">FOTO</div>
-  </div>
-</section>
-<!-- ...existing code... -->
+    <section id="contacto">
+      <div class="container">
+        <h2 style="text-align:center; margin-bottom:18px;">Contacto</h2>
+        <form action="https://formspree.io/f/xqajyndz" method="POST">
+          <input type="text" name="nombre" placeholder="Tu nombre" required>
+          <input type="email" name="email" placeholder="Tu email" required>
+          <textarea name="mensaje" placeholder="Tu mensaje" required rows="5"></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+    </section>
 
-<section id="contacto" style="padding:60px 20px;">
-  <h2 style="text-align:center; font-size:32px; margin-bottom:30px;">Contacto</h2>
-  <form action="https://formspree.io/f/xqajyndz" method="POST" style="max-width:400px; margin:0 auto; display:flex; flex-direction:column; gap:15px;">
-    <input type="text" name="nombre" placeholder="Tu nombre" required style="padding:10px; border-radius:6px; border:none;">
-    <input type="email" name="email" placeholder="Tu email" required style="padding:10px; border-radius:6px; border:none;">
-    <textarea name="mensaje" placeholder="Tu mensaje" required style="padding:10px; border-radius:6px; border:none; min-height:80px;"></textarea>
-    <button type="submit" style="background:var(--rojo); color:#fff; font-weight:bold; padding:12px; border-radius:8px; border:none;">Enviar</button>
-  </form>
-</section>
+    <section id="ubicacion">
+      <div class="container">
+        <h2 style="text-align:center; margin-bottom:18px;">¿Dónde estamos?</h2>
+        <div style="max-width:900px; margin:0 auto;">
+          <iframe src="https://www.google.com/maps?q=Núñez+3693,+Saavedra,+Buenos+Aires,+Argentina&output=embed" width="100%" height="350" style="border:0; border-radius:10px" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
 
-<!-- ...existing code... -->
-<!-- ...existing code... -->
+  <footer>
+    DR. BICI – Núñez 3693 (Saavedra) – Mar–Vie 13 a 19 / Sáb 11 a 17
+  </footer>
 
-<section id="ubicacion" style="padding:60px 20px;">
-  <h2 style="text-align:center; font-size:32px; margin-bottom:30px;">¿Dónde estamos?</h2>
-  <div style="max-width:600px; margin:0 auto;">
-    <iframe
-      src="https://www.google.com/maps?q=Núñez+3693,+Saavedra,+Buenos+Aires,+Argentina&output=embed"
-      width="100%"
-      height="350"
-      style="border:0; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,0.3);"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-  </div>
-</section>
-
-<!-- ...existing code... -->
-<footer>
-  DR. BICI – Núñez 3693 (Saavedra) – Mar–Vie 13 a 19 / Sáb 11 a 17
-</footer>
-<!-- ...existing code... -->
+  <script>
+    // toggle mobile menu
+    document.addEventListener('DOMContentLoaded', function () {
+      const menuBtn = document.querySelector('.menu-btn');
+      const nav = document.querySelector('header nav.main-nav');
+      menuBtn && menuBtn.addEventListener('click', () => nav.classList.toggle('open'));
+    });
+  </script>
 </body>
 </html>
