@@ -206,6 +206,10 @@
 
     /* Broken image fallback */
     .foto.broken { background-color: #333; }
+    .foto.broken img { display: none; }           /* oculta el broken image icon */
+    .foto.has-image img { display: block; }       /* muestra la img cuando está OK */
+    .foto .placeholder { pointer-events: none; }
+    .foto.has-image .placeholder { display: none; } /* ya tenías esta clase; repetir por seguridad */
 
     /* Lightbox overlay */
     #lightbox {
@@ -349,8 +353,8 @@
       <div class="container">
         <h2>Galería</h2>
         <div class="grid">
-          <div class="foto" data-alt="Bicicleta Nordic negra" style="background-image: url('images/bici1.png')">
-            <img src="images/bici1.png" alt="Bicicleta Nordic negra" loading="lazy">
+          <div class="foto" data-alt="Bicicleta Nordic negra" style="background-image: url('./images/bici1.png')">
+            <img src="./images/bici1.png" alt="Bicicleta Nordic negra" loading="lazy">
             <span class="placeholder">FOTO</span>
           </div>
           <div class="foto">FOTO</div>
@@ -418,49 +422,47 @@ document.addEventListener('DOMContentLoaded', function () {
   const lbImage = lightbox.querySelector('img');
   const lbClose = lightbox.querySelector('.close');
 
-  function getBackgroundUrl(el) {
-    const bg = getComputedStyle(el).backgroundImage;
-    if (!bg || bg === 'none') return null;
-    // The bg string is like: url("...") or url(...)
-    return bg.replace(/^url\((['"]?)(.*)\1\)$/, '$2');
-  }
-
   document.querySelectorAll('.foto').forEach(f => {
     const img = f.querySelector('img');
 
-    // Manage image placeholders / broken images
+    // Manage image placeholders / broken images & lightbox setup
     document.querySelectorAll('.foto').forEach(f => {
       const img = f.querySelector('img');
-      if (!img) return;
-      function markLoaded() {
-        if (img.complete && img.naturalWidth > 0) f.classList.add('has-image');
+      // mark loaded and hide placeholder
+      if (img) {
+        function markLoaded() {
+          if (img.complete && img.naturalWidth > 0) {
+            f.classList.add('has-image');
+          }
+        }
+        markLoaded();
+        img.addEventListener('load', markLoaded);
+        img.addEventListener('error', () => {
+          f.classList.add('broken');
+          img.style.display = 'none'; // hide broken image icon
+          console.warn('Imagen rota o ruta incorrecta:', img.src);
+        });
       }
-      markLoaded();
-      img.addEventListener('load', markLoaded);
-      img.addEventListener('error', () => {
-        f.classList.add('broken');
-        console.warn('Imagen rota o ruta incorrecta:', img.src);
+
+      // click to open lightbox (falls back to background-image if needed)
+      f.addEventListener('click', () => {
+        let src = null;
+        let alt = f.getAttribute('data-alt') || '';
+        if (img && img.complete && img.naturalWidth !== 0) {
+          src = img.src;
+          alt = img.alt || alt;
+        } else {
+          // get background-url fallback
+          const bg = getComputedStyle(f).backgroundImage;
+          if (bg && bg !== 'none') src = bg.replace(/^url\((['"]?)(.*)\1\)$/, '$2');
+        }
+        if (!src) return;
+        lbImage.src = src;
+        lbImage.alt = alt;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        lbClose.focus();
       });
-    });
-
-    f.addEventListener('click', () => {
-      let src = null;
-      let alt = f.getAttribute('data-alt') || '';
-
-      if (img && img.complete && img.naturalWidth !== 0) {
-        src = img.src;
-        alt = img.alt || alt;
-      } else {
-        src = getBackgroundUrl(f);
-      }
-
-      if (!src) return; // no image available
-
-      lbImage.src = src;
-      lbImage.alt = alt;
-      lightbox.classList.add('open');
-      lightbox.setAttribute('aria-hidden', 'false');
-      lbClose.focus();
     });
   });
 
