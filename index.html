@@ -4,6 +4,33 @@
   <meta charset="UTF-8">
   <title>DR. BICI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DR. BICI — Servicio profesional para bicicletas: afinaciones, frenos, transmisión, armado y lavado técnico en Núñez, Buenos Aires. Turnos y consultas por WhatsApp.">
+  <meta property="og:title" content="DR. BICI – Taller móvil y armado de bicicletas">
+  <meta property="og:description" content="Servicio profesional y confiable para tu bici. Turnos online y atención personalizada.">
+  <meta property="og:type" content="business.business">
+  <meta property="og:locale" content="es_AR">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "DR. BICI",
+    "image": "https://TU-DOMINIO/aquí-tu-favicon-o-hero.jpg",
+    "@id": "",
+    "url": "https://TU-DOMINIO",
+    "telephone": "+5491123456789",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Núñez 3693",
+      "addressLocality": "Saavedra",
+      "addressRegion": "CABA",
+      "postalCode": "1426",
+      "addressCountry": "AR"
+    },
+    "openingHours": "Mo-Fr 13:00-19:00, Sa 11:00-17:00",
+    "priceRange": "$"
+  }
+  </script>
 
   <style>
     :root {
@@ -21,6 +48,9 @@
       font-family: Arial, sans-serif;
       background-color: var(--fondo);
       color: var(--texto);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior: smooth;
     }
 
     /* Contenedor */
@@ -46,8 +76,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-        padding: 0 20px;
       gap: 12px;
+      padding: 0 20px; /* evita que los elementos queden fuera del viewport */
     }
     header h1 {
       font-size: 20px;
@@ -73,7 +103,7 @@
       font-weight: 700;
       border-radius: 8px;
       white-space: nowrap;
-       margin-left: 12px;
+      margin-left: 12px;
     }
 
     /* botón hamburger */
@@ -102,15 +132,17 @@
     /* GRID / SERVICIOS */
     .servicios { padding: 60px 0; }
     .servicios h2 { text-align: center; font-size: 32px; margin-bottom: 24px; }
+
+    /* 3 en fila en desktop, 2 en tablet, 1 en mobile */
     .grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* mostrar 3 columnas en desktop */
-  gap: 20px;
-  align-items: start;
-  padding: 10px 0;
-  /* Quitar overflow-x para eliminar la barra */
-  overflow-x: visible;
-}
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: start;
+      padding: 10px 0;
+      width: 100%;
+    }
+
     .servicio-card {
       background: #1b1b1b;
       border-left: 8px solid var(--rojo);
@@ -118,25 +150,89 @@
       box-shadow: var(--sombra);
       border-radius: 10px;
       min-height: 80px;
-  /* eliminar min-width y flex para que se adapten a la grilla */
-  display: flex;
-  align-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      word-wrap: break-word;
     }
 
     /* GALERÍA */
     .galeria { padding: 60px 0; }
+    .galeria h2 { margin-bottom: 20px; }
     .foto {
-  background: #333;
-  height: 160px;
-  border: 2px dashed var(--amarillo);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--amarillo);
-  font-weight: bold;
-  border-radius: 6px;
-  /* quitar min-width/flex para que dependa del grid */
-}
+      background: #333;
+      height: 160px;
+      border: 2px dashed var(--amarillo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--amarillo);
+      font-weight: bold;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .foto {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    /* Si la imagen falla (img oculto), el background mantiene la visual */
+    .foto.broken { /* se añade por JS si img tuvo error */
+      background-color: #333;
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Lightbox overlay */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.88);
+      z-index: 2000;
+      padding: 24px;
+    }
+    #lightbox.open { display:flex; }
+
+    #lightbox img {
+      max-width: 95%;
+      max-height: 95%;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      border-radius: 8px;
+    }
+
+    #lightbox .close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border: none;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* Evitar que el lightbox y las imágenes generen scroll horizontal */
+    html, body { overflow-x: hidden; }
+
     /* CONTACTO */
     #contacto { padding: 60px 0; }
     form { max-width: 480px; margin: 0 auto; display:flex; flex-direction:column; gap:12px; }
@@ -155,6 +251,13 @@
     section { scroll-margin-top: 90px; }
 
     /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
     @media (max-width: 768px) {
       header .container { padding: 0 12px; }
       .menu-btn { display: block; }
@@ -170,31 +273,42 @@
         padding: 8px 12px;
         border-top: 1px solid rgba(255,255,255,0.04);
       }
-      @media (min-width: 1200px) {
-  .servicio-card { min-width: 260px; flex: 0 0 260px; }
-  .galeria .foto { min-width: 240px; flex: 0 0 240px; }
-}
       header nav.main-nav.open { display: flex; }
       header nav.main-nav a { padding: 12px 8px; }
       header .cta { width: 120px; text-align:center; }
       .hero { padding: 50px 0; }
       .foto { height: 140px; }
     }
-    
 
+    @media (min-width: 1200px) {
+      .servicio-card { min-height: 100px; }
+      .galeria .foto { height: 180px; }
+    }
+
+    /* A11Y fokus */
+    a:focus, button:focus, input:focus, textarea:focus { outline: 3px solid rgba(255,255,255,0.08); outline-offset: 2px; }
   </style>
+  <!-- Replace G-XXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXX');
+  </script>
 </head>
 <body>
   <header>
     <div class="container">
       <h1>DR. BICI</h1>
+
       <button class="menu-btn" aria-label="Abrir menú">☰</button>
 
-      <nav class="main-nav">
+      <nav class="main-nav" role="navigation" aria-label="Navegación principal">
         <a href="#servicios">Servicios</a>
         <a href="#galeria">Galería</a>
         <a href="#contacto">Contacto</a>
-        <a class="cta" href="https://wa.me/5491155058963" target="_blank" rel="noreferrer">WhatsApp</a>
+        <a class="cta" href="https://wa.me/5491155058963"target="_blank" rel="noreferrer">WhatsApp</a>
       </nav>
     </div>
   </header>
@@ -210,7 +324,7 @@
     <section id="servicios" class="servicios">
       <div class="container">
         <h2>Servicios</h2>
-        <div class="grid">
+        <div class="grid" aria-live="polite">
           <div class="servicio-card">Afinación completa</div>
           <div class="servicio-card">Servicio de frenos</div>
           <div class="servicio-card">Transmisión</div>
@@ -225,7 +339,9 @@
       <div class="container">
         <h2>Galería</h2>
         <div class="grid">
-          <div class="foto">FOTO</div>
+          <div class="foto" data-alt="Bicicleta Nordic negra" style="background-image: url('./04c884b2a4a5e7e0610d80f08002.png');">
+            <img src="./04c884b2a4a5e7e0610d80f08002.png" alt="Bicicleta Nordic negra" loading="lazy" onerror="this.style.display='none'">
+          </div>
           <div class="foto">FOTO</div>
           <div class="foto">FOTO</div>
           <div class="foto">FOTO</div>
@@ -240,8 +356,9 @@
         <h2 style="text-align:center; margin-bottom:18px;">Contacto</h2>
         <form action="https://formspree.io/f/xqajyndz" method="POST">
           <input type="text" name="nombre" placeholder="Tu nombre" required>
-          <input type="email" name="email" placeholder="Tu email" required>
+          <input type="email" name="_replyto" placeholder="Tu email" required>
           <textarea name="mensaje" placeholder="Tu mensaje" required rows="5"></textarea>
+          <input type="hidden" name="_subject" value="Nuevo mensaje desde DR. BICI">
           <button type="submit">Enviar</button>
         </form>
       </div>
@@ -255,19 +372,94 @@
         </div>
       </div>
     </section>
+
+    <section id="testimonios" class="testimonios" style="padding:40px 0;">
+      <div class="container">
+        <h2 style="text-align:center; margin-bottom:20px;">Testimonios</h2>
+        <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 18px;">
+          <div style="background:#1a1a1a;padding:18px;border-radius:8px;">"Excelente atención y rápido servicio. Mi bici quedó como nueva." — Marta G.</div>
+          <div style="background:#1a1a1a;padding:18px;border-radius:8px;">"Recomiendo 100%. Precios justos." — Lucas P.</div>
+          <div style="background:#1a1a1a;padding:18px;border-radius:8px;">"Profesionales y confiables." — José M.</div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
     DR. BICI – Núñez 3693 (Saavedra) – Mar–Vie 13 a 19 / Sáb 11 a 17
   </footer>
 
+  <!-- Lightbox -->
+  <div id="lightbox" aria-hidden="true" role="dialog" aria-label="Imagen en pantalla completa">
+    <button class="close" aria-label="Cerrar">✕</button>
+    <img src="" alt="">
+  </div>
+
   <script>
-    // toggle mobile menu
-    document.addEventListener('DOMContentLoaded', function () {
-      const menuBtn = document.querySelector('.menu-btn');
-      const nav = document.querySelector('header nav.main-nav');
-      menuBtn && menuBtn.addEventListener('click', () => nav.classList.toggle('open'));
+document.addEventListener('DOMContentLoaded', function () {
+  const menuBtn = document.querySelector('.menu-btn');
+  const nav = document.querySelector('header nav.main-nav');
+  menuBtn && menuBtn.addEventListener('click', () => nav.classList.toggle('open'));
+  document.querySelectorAll('header nav.main-nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+
+  // Lightbox logic (works if <img> loads OR using background-image as fallback)
+  const lightbox = document.getElementById('lightbox');
+  const lbImage = lightbox.querySelector('img');
+  const lbClose = lightbox.querySelector('.close');
+
+  function getBackgroundUrl(el) {
+    const bg = getComputedStyle(el).backgroundImage;
+    if (!bg || bg === 'none') return null;
+    // The bg string is like: url("...") or url(...)
+    return bg.replace(/^url\((['"]?)(.*)\1\)$/, '$2');
+  }
+
+  document.querySelectorAll('.foto').forEach(f => {
+    const img = f.querySelector('img');
+
+    // Mark broken images so CSS fallback works
+    if (img) {
+      img.addEventListener('error', () => {
+        f.classList.add('broken');
+        console.warn('Imagen CDN rota o ruta incorrecta:', img.src);
+      });
+    }
+
+    f.addEventListener('click', () => {
+      let src = null;
+      let alt = f.getAttribute('data-alt') || '';
+
+      if (img && img.complete && img.naturalWidth !== 0) {
+        src = img.src;
+        alt = img.alt || alt;
+      } else {
+        src = getBackgroundUrl(f);
+      }
+
+      if (!src) return; // no image available
+
+      lbImage.src = src;
+      lbImage.alt = alt;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      lbClose.focus();
     });
+  });
+
+  function closeLightbox () {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lbImage.src = '';
+  }
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+});
   </script>
 </body>
 </html>
