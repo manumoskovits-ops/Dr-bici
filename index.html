@@ -190,12 +190,22 @@
       border-radius: 6px;
     }
 
-    /* Si la imagen falla (img oculto), el background mantiene la visual */
-    .foto.broken { /* se añade por JS si img tuvo error */
-      background-color: #333;
-      background-size: cover;
-      background-position: center;
+    /* Placeholder text centered */
+    .foto .placeholder {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--amarillo);
+      font-weight: bold;
+      pointer-events: none;
     }
+
+    /* Hide placeholder when image is present */
+    .foto.has-image .placeholder { display: none; }
+
+    /* Broken image fallback */
+    .foto.broken { background-color: #333; }
 
     /* Lightbox overlay */
     #lightbox {
@@ -339,8 +349,9 @@
       <div class="container">
         <h2>Galería</h2>
         <div class="grid">
-          <div class="foto" data-alt="Bicicleta Nordic negra" style="background-image: url('./04c884b2a4a5e7e0610d80f08002.png');">
-            <img src="./04c884b2a4a5e7e0610d80f08002.png" alt="Bicicleta Nordic negra" loading="lazy" onerror="this.style.display='none'">
+          <div class="foto" data-alt="Bicicleta Nordic negra" style="background-image: url('images/bici1.png')">
+            <img src="images/bici1.png" alt="Bicicleta Nordic negra" loading="lazy">
+            <span class="placeholder">FOTO</span>
           </div>
           <div class="foto">FOTO</div>
           <div class="foto">FOTO</div>
@@ -417,13 +428,20 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.foto').forEach(f => {
     const img = f.querySelector('img');
 
-    // Mark broken images so CSS fallback works
-    if (img) {
+    // Manage image placeholders / broken images
+    document.querySelectorAll('.foto').forEach(f => {
+      const img = f.querySelector('img');
+      if (!img) return;
+      function markLoaded() {
+        if (img.complete && img.naturalWidth > 0) f.classList.add('has-image');
+      }
+      markLoaded();
+      img.addEventListener('load', markLoaded);
       img.addEventListener('error', () => {
         f.classList.add('broken');
-        console.warn('Imagen CDN rota o ruta incorrecta:', img.src);
+        console.warn('Imagen rota o ruta incorrecta:', img.src);
       });
-    }
+    });
 
     f.addEventListener('click', () => {
       let src = null;
